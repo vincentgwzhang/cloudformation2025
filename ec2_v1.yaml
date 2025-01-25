@@ -1,0 +1,8 @@
+Resources:
+  ec2ForCloudformation:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone: eu-west-1a
+      # AMI-ID
+      ImageId: ami-0720a3ca2735bf2fa
+      InstanceType: t2.micro
