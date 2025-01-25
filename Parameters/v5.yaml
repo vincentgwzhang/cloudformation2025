@@ -1,0 +1,20 @@
+Parameters:
+  KomaInstanceType:
+    # 这是新建一个 SSM 的值
+    Description: EC2 instance type
+    Type: AWS::SSM::Parameter::Value<String>
+    # 其实default 就是 key
+    Default: /deeplearnaws/ec2/instanceType
+
+  KomaAMIId:
+    Description: EC2 AMI
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    # 其实default 就是 key
+    Default: /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
+
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref KomaInstanceType
+      ImageId: !Ref KomaAMIId
