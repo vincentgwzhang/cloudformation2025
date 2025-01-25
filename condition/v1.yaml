@@ -1,0 +1,31 @@
+Parameters:
+  KomaEnvironmentName:
+    Description: Deeplearnaws Environment Name
+    Type: String
+    Default: dev
+    AllowedValues: [dev, prod]
+
+Mappings:
+  KomaEnvInstanceType:
+    dev:
+      instanceType: t2.micro
+    prod:
+      instanceType: t2.small
+
+Conditions:
+  CreateProdResources: !Equals [ !Ref KomaEnvironmentName, prod ]
+
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      # 常用组合用法, !Ref 'KomaEnvironmentName' 要么用户选择 dev, 要么选择 prod
+      InstanceType: !FindInMap [KomaEnvInstanceType, !Ref 'KomaEnvironmentName', instanceType]
+      ImageId: ami-0701e21c502689c31
+
+  KomaS3Bucket:
+    Type: AWS::S3::Bucket
+    # 也就是说当用户选择了 KomaEnvironmentName 为 Prod 的时候，才会生成 S3
+    Condition: CreateProdResources
+    Properties:
+      BucketName: "cloudformation-deeplearnaws-com"

@@ -1,0 +1,40 @@
+Parameters:
+  KomaEnvName:
+    Description: Deeplearnaws Environment Name
+    Type: String
+    Default: dev
+    AllowedValues: [dev, prod]
+  KomaEnvInstanceType:
+    Description: Deeplearnaws Environment InstanceType
+    Type: String
+    Default: t2.micro
+    AllowedValues: [t2.nano, t2.micro, t2.small]
+
+Rules:
+  # 产品环境条件约束, 这段话的意思是说，如果用户选择的 KomaEnvName 的是 prod 的说话，如果KomaEnvInstanceType 不是 t2.small， 那么抛出
+  ProdInstanceType:
+    RuleCondition: !Equals 
+      - !Ref KomaEnvName
+      - prod
+    Assertions:
+      - Assert:
+          !Equals [t2.small, !Ref KomaEnvInstanceType]
+        AssertDescription: 'For a production environment, the instance type must be t2.small.'
+  # 开发环境条件约束, 这段话的意思是说，如果用户选择的 KomaEnvName 的是 dev 的说话，如果KomaEnvInstanceType 必须是 t2.nano 或者 t2.micro，否则抛出错误
+  DevInstanceType:
+    RuleCondition: !Equals 
+      - !Ref KomaEnvName
+      - dev
+    Assertions:
+      - Assert:
+          'Fn::Or':
+            - !Equals [!Ref KomaEnvInstanceType, t2.nano]
+            - !Equals [!Ref KomaEnvInstanceType, t2.micro]
+        AssertDescription: 'For a development environment, the instance type must be t2.nano or t2.micro.'
+
+Resources:
+  KomaEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref KomaEnvInstanceType
+      ImageId: ami-0701e21c502689c31

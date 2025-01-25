@@ -1,0 +1,2 @@
+其实rules 就是 CloudFormation 里面的 assertTest
+通常例如做到检查用户输入的参数，看是否正确
