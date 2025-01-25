@@ -6,3 +6,7 @@ Resources:
       # AMI-ID
       ImageId: ami-0720a3ca2735bf2fa
       InstanceType: t2.micro
+  mywebEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref ec2ForCloudformation
