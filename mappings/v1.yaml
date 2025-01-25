@@ -1,0 +1,19 @@
+Parameters:
+  KomaEnvironmentName:
+    Description: Koma Environment Name
+    Type: String
+    AllowedValues: [dev, prod]
+
+Mappings:
+  KomaEnvInstanceType:
+    dev:
+      instanceType: t2.micro
+    prod:
+      instanceType: t2.small
+
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !FindInMap [KomaEnvInstanceType, !Ref 'KomaEnvironmentName', instanceType]
+      ImageId: ami-0701e21c502689c31

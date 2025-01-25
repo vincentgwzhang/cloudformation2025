@@ -1,0 +1,10 @@
+Resources:
+  ec2ForCloudformation:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone:
+        { "Fn::Select": ["0", { "Fn::GetAZs": { "Ref": "AWS::Region" } }] }
+      ImageId: ami-0701e21c502689c31
+      InstanceType: t2.micro
+      SecurityGroups:
+        - !ImportValue "lesson18-SSHSG"
