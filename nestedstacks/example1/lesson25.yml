@@ -1,5 +1,5 @@
 Parameters:
-  #https://deeplearnaws-cf-tpl.s3.ap-northeast-1.amazonaws.com/lesson25sg.yml
+  #https://deeplearnaws-cf-tpl-20250126.s3.eu-west-1.amazonaws.com/lesson25sg.yml
   TemplateURL:
     Description: URL of the nested stack template
     Type: String
@@ -17,6 +17,6 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: t2.micro
-      ImageId: ami-0e60b6d05dc38ff11
+      ImageId: ami-0720a3ca2735bf2fa
       SecurityGroupIds:
         - !GetAtt WebSecurityGroupStack.Outputs.WebGroupId

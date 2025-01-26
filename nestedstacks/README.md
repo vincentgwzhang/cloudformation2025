@@ -1,0 +1,1 @@
+删除嵌套stack 的时候要直接删除root template, 此处就是 lesson25.yml 的那个 template
